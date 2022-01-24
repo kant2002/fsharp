@@ -167,6 +167,9 @@ let GenerateIlxCode
            None
         else Some topAttrs.mainMethodAttrs
 
+    // Derive based on presence of ReflectionFreeCodeAttribute in topAttrs.assemblyAttrs
+    let reflectionFreeCode: bool = true
+
     let ilxGenOpts: IlxGenOptions =
         { generateFilterBlocks = tcConfig.generateFilterBlocks
           emitConstantArraysUsingStaticDataBlobs = not isInteractiveOnMono
@@ -179,7 +182,8 @@ let GenerateIlxCode
           ilxBackend = ilxBackend
           isInteractive = tcConfig.isInteractive
           isInteractiveItExpr = isInteractiveItExpr
-          alwaysCallVirt = tcConfig.alwaysCallVirt }
+          alwaysCallVirt = tcConfig.alwaysCallVirt
+          generateReflectionFreeCode = reflectionFreeCode }
 
     ilxGenerator.GenerateCode (ilxGenOpts, optimizedImpls, topAttrs.assemblyAttrs, topAttrs.netModuleAttrs)
 

@@ -52,6 +52,9 @@ type internal IlxGenOptions =
 
       /// Indicates that, whenever possible, use callvirt instead of call
       alwaysCallVirt: bool
+
+      // Ask always generate reflection-free code.
+      generateReflectionFreeCode: bool
     }
 
 /// The results of the ILX compilation of one fragment of an assembly

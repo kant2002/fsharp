@@ -223,6 +223,9 @@ type IlxGenOptions =
 
       /// Whenever possible, use callvirt instead of call
       alwaysCallVirt: bool
+
+      // Ask always generate reflection-free code.
+      generateReflectionFreeCode: bool
     }
 
 /// Compilation environment for compiling a fragment of an assembly
@@ -7886,6 +7889,7 @@ and GenAbstractBinding cenv eenv tref (vref: ValRef) =
 /// Generate a ToString method that calls 'sprintf "%A"'
 and GenToStringMethod cenv eenv ilThisTy m =
     let g = cenv.g
+    let generateReflectionFreeCode = cenv.opts.generateReflectionFreeCode
     [ match (eenv.valsInScope.TryFind g.sprintf_vref.Deref,
              eenv.valsInScope.TryFind g.new_format_vref.Deref) with
       | Some(Lazy(Method(_, _, sprintfMethSpec, _, _, _, _, _, _, _, _, _))), Some(Lazy(Method(_, _, newFormatMethSpec, _, _, _, _, _, _, _, _, _))) ->
@@ -7911,7 +7915,7 @@ and GenToStringMethod cenv eenv ilThisTy m =
 
                let ilInstrs =
                    [ // load the hardwired format string
-                     I_ldstr "%+A"
+                     I_ldstr (if generateReflectionFreeCode then "NoReflection %+A" else "%+A")
                      // make the printf format object
                      mkNormalNewobj newFormatMethSpec
                      // call sprintf

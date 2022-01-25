@@ -872,6 +872,18 @@ namespace Microsoft.FSharp.Core
         /// <returns>UnverifiableAttribute</returns>
         new: unit -> UnverifiableAttribute
 
+    /// <summary>This attribute is used to inform FSharp compiler produce reflection-free code where possible.</summary>
+    ///
+    /// <category>Attributes</category>
+    [<AttributeUsage(AttributeTargets.Assembly, AllowMultiple=false)>]
+    [<Sealed>]
+    type ReflectionFreeCodeAttribute =
+        inherit Attribute
+
+        /// <summary>Creates an instance of the attribute</summary>
+        /// <returns>ReflectionFreeCodeAttribute</returns>
+        new: unit -> ReflectionFreeCodeAttribute
+
     /// <summary>This attribute is used to tag values that may not be dynamically invoked at runtime. This is
     /// typically added to inlined functions whose implementations include unverifiable code. It
     /// causes the method body emitted for the inlined function to raise an exception if 

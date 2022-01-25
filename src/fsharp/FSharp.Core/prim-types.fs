@@ -322,6 +322,11 @@ namespace Microsoft.FSharp.Core
     type UnverifiableAttribute() =
         inherit System.Attribute()
 
+    [<AttributeUsage(AttributeTargets.Assembly, AllowMultiple=false)>]
+    [<Sealed>]
+    type ReflectionFreeCodeAttribute() =
+        inherit System.Attribute()
+
     [<AttributeUsage(AttributeTargets.Method ||| AttributeTargets.Property, AllowMultiple=false)>]
     [<Sealed>]
     type NoDynamicInvocationAttribute(isLegacy: bool) =

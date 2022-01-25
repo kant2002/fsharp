@@ -8885,6 +8885,10 @@ type IlxAssemblyGenerator(amap: ImportMap, tcGlobals: TcGlobals, tcVal: Constrai
 
     /// Generate ILX code for an assembly fragment
     member _.GenerateCode (codeGenOpts, typedAssembly, assemAttribs, moduleAttribs) =
+        // Derive based on presence of ReflectionFreeCodeAttribute in assemAttribs
+        let reflectionFreeCode: bool =
+            HasFSharpAttribute tcGlobals tcGlobals.attrib_ReflectionFreeCodeAttribute assemAttribs
+
         let cenv: cenv =
             { g=tcGlobals
               tcVal = tcVal
@@ -8893,7 +8897,7 @@ type IlxAssemblyGenerator(amap: ImportMap, tcGlobals: TcGlobals, tcVal: Constrai
               amap = amap
               casApplied = casApplied
               intraAssemblyInfo = intraAssemblyInfo
-              opts = codeGenOpts
+              opts = { codeGenOpts with generateReflectionFreeCode = reflectionFreeCode }
               optimizeDuringCodeGen = (fun _flag expr -> expr)
               stackGuard = StackGuard(IlxGenStackGuardDepth) }
         GenerateCode (cenv, anonTypeTable, ilxGenEnv, typedAssembly, assemAttribs, moduleAttribs)

@@ -1244,6 +1244,7 @@ type public TcGlobals(compilingFslib: bool, ilg:ILGlobals, fslibCcu: CcuThunk, d
   member val attrib_CompilerMessageAttribute               = mk_MFCore_attrib "CompilerMessageAttribute"
   member val attrib_ExperimentalAttribute                  = mk_MFCore_attrib "ExperimentalAttribute"
   member val attrib_UnverifiableAttribute                  = mk_MFCore_attrib "UnverifiableAttribute"
+  member val attrib_ReflectionFreeCodeAttribute            = mk_MFCore_attrib "ReflectionFreeCodeAttribute"
   member val attrib_LiteralAttribute                       = mk_MFCore_attrib "LiteralAttribute"
   member val attrib_ConditionalAttribute                   = findSysAttrib "System.Diagnostics.ConditionalAttribute"
   member val attrib_OptionalArgumentAttribute              = mk_MFCore_attrib "OptionalArgumentAttribute"

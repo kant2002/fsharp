@@ -180,7 +180,7 @@ let GenerateIlxCode
           isInteractive = tcConfig.isInteractive
           isInteractiveItExpr = isInteractiveItExpr
           alwaysCallVirt = tcConfig.alwaysCallVirt
-          generateReflectionFreeCode = false }
+          generateReflectionFreeCode = false } // This value would be derived based on ReflectionFreeCodeAttribute later during processing.
 
     ilxGenerator.GenerateCode (ilxGenOpts, optimizedImpls, topAttrs.assemblyAttrs, topAttrs.netModuleAttrs)
 

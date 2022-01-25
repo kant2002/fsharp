@@ -3066,7 +3066,7 @@ and GenAllocRecd cenv cgbuf eenv ctorInfo (tcref,argtys,args,m) sequel =
         GenSequel cenv eenv.cloc cgbuf sequel
 
 and GenAllocAnonRecd cenv cgbuf eenv (anonInfo: AnonRecdTypeInfo, tyargs, args, m) sequel =
-    let anonCtor, _anonMethods, anonType = cgbuf.mgbuf.LookupAnonType ((fun ilThisTy -> GenToStringMethod cenv eenv ilThisTy m), anonInfo)
+    let anonCtor, _anonMethods, anonType = cgbuf.mgbuf.LookupAnonType ((fun ilThisTy -> GenToStringRecordMethod cenv eenv ilThisTy m), anonInfo)
     let boxity = anonType.Boxity
     GenExprs cenv cgbuf eenv args
     let ilTypeArgs = GenTypeArgs cenv.amap m eenv.tyenv tyargs
@@ -3075,7 +3075,7 @@ and GenAllocAnonRecd cenv cgbuf eenv (anonInfo: AnonRecdTypeInfo, tyargs, args, 
     GenSequel cenv eenv.cloc cgbuf sequel
 
 and GenGetAnonRecdField cenv cgbuf eenv (anonInfo: AnonRecdTypeInfo, e, tyargs, n, m) sequel =
-    let _anonCtor, anonMethods, anonType = cgbuf.mgbuf.LookupAnonType ((fun ilThisTy -> GenToStringMethod cenv eenv ilThisTy m), anonInfo)
+    let _anonCtor, anonMethods, anonType = cgbuf.mgbuf.LookupAnonType ((fun ilThisTy -> GenToStringRecordMethod cenv eenv ilThisTy m), anonInfo)
     let boxity = anonType.Boxity
     let ilTypeArgs = GenTypeArgs cenv.amap m eenv.tyenv tyargs
     let anonMethod = anonMethods.[n]
@@ -7619,7 +7619,7 @@ and GenImplFile cenv (mgbuf: AssemblyBuilder) mainInfoOpt eenv (implFile: TypedI
 
     // Generate all the anonymous record types mentioned anywhere in this module
     for anonInfo in anonRecdTypes.Values do
-        mgbuf.GenerateAnonType((fun ilThisTy -> GenToStringMethod cenv eenv ilThisTy m), anonInfo)
+        mgbuf.GenerateAnonType((fun ilThisTy -> GenToStringRecordMethod cenv eenv ilThisTy m), anonInfo)
 
     let eenv = {eenv with cloc = { eenv.cloc with TopImplQualifiedName = qname.Text } }
 
@@ -7886,10 +7886,16 @@ and GenAbstractBinding cenv eenv tref (vref: ValRef) =
     else
         [], [], []
 
-/// Generate a ToString method that calls 'sprintf "%A"'
-and GenToStringMethod cenv eenv ilThisTy m =
-    let g = cenv.g
+and GenToStringRecordMethod cenv eenv ilThisTy m =
     let generateReflectionFreeCode = cenv.opts.generateReflectionFreeCode
+    if generateReflectionFreeCode then GenToStringMethod cenv eenv ilThisTy m else GenReflectionFreeToStringMethod cenv eenv ilThisTy m
+
+and GenToStringUnionMethod cenv eenv ilThisTy m =
+    let generateReflectionFreeCode = cenv.opts.generateReflectionFreeCode
+    if generateReflectionFreeCode then GenToStringMethod cenv eenv ilThisTy m else GenReflectionFreeToStringMethod cenv eenv ilThisTy m
+
+and GenReflectionFreeToStringMethod cenv eenv ilThisTy m =
+    let g = cenv.g
     [ match (eenv.valsInScope.TryFind g.sprintf_vref.Deref,
              eenv.valsInScope.TryFind g.new_format_vref.Deref) with
       | Some(Lazy(Method(_, _, sprintfMethSpec, _, _, _, _, _, _, _, _, _))), Some(Lazy(Method(_, _, newFormatMethSpec, _, _, _, _, _, _, _, _, _))) ->
@@ -7915,7 +7921,53 @@ and GenToStringMethod cenv eenv ilThisTy m =
 
                let ilInstrs =
                    [ // load the hardwired format string
-                     I_ldstr (if generateReflectionFreeCode then "NoReflection %+A" else "%+A")
+                     I_ldstr "NoReflection %+A"
+                     // make the printf format object
+                     mkNormalNewobj newFormatMethSpec
+                     // call sprintf
+                     mkNormalCall sprintfMethSpec
+                     // call the function returned by sprintf
+                     mkLdarg0
+                     if ilThisTy.Boxity = ILBoxity.AsValue then
+                         mkNormalLdobj ilThisTy
+                     yield! callInstrs ]
+
+               let ilMethodBody = mkMethodBody (true, [], 2, nonBranchingInstrsToCode ilInstrs, None, eenv.imports)
+
+               let mdef = mkILNonGenericVirtualMethod ("ToString", ILMemberAccess.Public, [], mkILReturn g.ilg.typ_String, ilMethodBody)
+               let mdef = mdef.With(customAttrs = mkILCustomAttrs [ g.CompilerGeneratedAttribute ])
+               yield mdef
+      | _ -> () ]
+
+/// Generate a ToString method that calls 'sprintf "%A"'
+and GenToStringMethod cenv eenv ilThisTy m =
+    let g = cenv.g
+    [ match (eenv.valsInScope.TryFind g.sprintf_vref.Deref,
+             eenv.valsInScope.TryFind g.new_format_vref.Deref) with
+      | Some(Lazy(Method(_, _, sprintfMethSpec, _, _, _, _, _, _, _, _, _))), Some(Lazy(Method(_, _, newFormatMethSpec, _, _, _, _, _, _, _, _, _))) ->
+               // The type returned by the 'sprintf' call
+               let funcTy = EraseClosures.mkILFuncTy g.ilxPubCloEnv ilThisTy g.ilg.typ_String
+
+               // Give the instantiation of the printf format object, i.e. a Format`5 object compatible with StringFormat<ilThisTy>
+               let newFormatMethSpec =
+                   mkILMethSpec(newFormatMethSpec.MethodRef, AsObject,
+                                [ // 'T -> string'
+                                  funcTy
+                                  // rest follow from 'StringFormat<T>'
+                                  GenUnitTy cenv eenv m
+                                  g.ilg.typ_String
+                                  g.ilg.typ_String
+                                  ilThisTy], [])
+
+               // Instantiate with our own type
+               let sprintfMethSpec = mkILMethSpec(sprintfMethSpec.MethodRef, AsObject, [], [funcTy])
+
+               // Here's the body of the method. Call printf, then invoke the function it returns
+               let callInstrs = EraseClosures.mkCallFunc g.ilxPubCloEnv (fun _ -> 0us) eenv.tyenv.Count Normalcall (Apps_app(ilThisTy, Apps_done g.ilg.typ_String))
+
+               let ilInstrs =
+                   [ // load the hardwired format string
+                     I_ldstr "%+A"
                      // make the printf format object
                      mkNormalNewobj newFormatMethSpec
                      // call sprintf
@@ -8304,7 +8356,7 @@ and GenTypeDef cenv mgbuf lazyInitInfo eenv m (tycon: Tycon) =
                      yield mkILSimpleStorageCtor(Some g.ilg.typ_Object.TypeSpec, ilThisTy, [], [], reprAccess, None, eenv.imports)
 
                  if not (tycon.HasMember g "ToString" []) then
-                    yield! GenToStringMethod cenv eenv ilThisTy m
+                    yield! GenToStringRecordMethod cenv eenv ilThisTy m
 
               | TFSharpObjectRepr r when tycon.IsFSharpDelegateTycon ->
 
@@ -8327,7 +8379,7 @@ and GenTypeDef cenv mgbuf lazyInitInfo eenv m (tycon: Tycon) =
                      ()
 
               | TFSharpUnionRepr _ when not (tycon.HasMember g "ToString" []) ->
-                  yield! GenToStringMethod cenv eenv ilThisTy m
+                  yield! GenToStringUnionMethod cenv eenv ilThisTy m
               | _ -> () ]
 
         let ilMethods = methodDefs @ augmentOverrideMethodDefs @ abstractMethodDefs

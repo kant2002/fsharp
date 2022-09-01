@@ -1933,8 +1933,7 @@ type TcSymbolUses(g, capturedNameResolutions: ResizeArray<CapturedNameResolution
 
     // Make sure we only capture the information we really need to report symbol uses
     let allUsesOfSymbols =
-        capturedNameResolutions
-        |> ResizeArray.mapToSmallArrayChunks (fun cnr -> { ItemWithInst=cnr.ItemWithInst; ItemOccurence=cnr.ItemOccurence; DisplayEnv=cnr.DisplayEnv; Range=cnr.Range })
+        [| for cnr in capturedNameResolutions -> { ItemWithInst=cnr.ItemWithInst; ItemOccurence=cnr.ItemOccurence; DisplayEnv=cnr.DisplayEnv; Range=cnr.Range } |]
 
     let capturedNameResolutions = ()
     do capturedNameResolutions // don't capture this!
@@ -1943,8 +1942,7 @@ type TcSymbolUses(g, capturedNameResolutions: ResizeArray<CapturedNameResolution
         // This member returns what is potentially a very large array, which may approach the size constraints of the Large Object Heap.
         // This is unlikely in practice, though, because we filter down the set of all symbol uses to those specifically for the given `item`.
         // Consequently we have a much lesser chance of ending up with an array large enough to be promoted to the LOH.
-        [| for symbolUseChunk in allUsesOfSymbols do
-            for symbolUse in symbolUseChunk do
+        [| for symbolUse in allUsesOfSymbols do
                 if protectAssemblyExploration false (fun () -> ItemsAreEffectivelyEqual g item symbolUse.ItemWithInst.Item) then
                     yield symbolUse |]
 

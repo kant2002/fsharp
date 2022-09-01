@@ -443,7 +443,7 @@ type internal TcSymbolUses =
     member GetUsesOfSymbol: Item -> TcSymbolUseData[]
 
     /// All the uses of all items within the file
-    member AllUsesOfSymbols: TcSymbolUseData[][]
+    member AllUsesOfSymbols: TcSymbolUseData[]
 
     /// Get the locations of all the printf format specifiers in the file
     member GetFormatSpecifierLocationsAndArity: unit -> (range * int)[]

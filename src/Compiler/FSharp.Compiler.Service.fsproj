@@ -31,6 +31,11 @@
     <OtherFlags Condition="'$(SolutionName)' == 'FSharp.Compiler.Service'">$(OtherFlags) --version:$(VersionPrefix)</OtherFlags>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(SolutionName)' == 'FSharp.Compiler.Service'">
+    <NO_MSBUILD>true</NO_MSBUILD>
+    <DefineConstants>$(DefineConstants);NO_MSBUILD</DefineConstants>
+  </PropertyGroup>
+
   <!--  The FSharp.Compiler.Service dll provides a referencable public interface for tool builders -->
   <PropertyGroup Condition="'$(Configuration)' != 'Proto'">
       <CompressMetadata Condition="'$(CompressAllMetadata)' != 'true'">false</CompressMetadata>
@@ -480,10 +485,10 @@
     <Compile Include="Interactive\fsi.fsi" />
     <Compile Include="Interactive\fsi.fs" />
     <!-- A legacy resolver used to help with scripting diagnostics in the Visual Studio tools -->
-    <Compile Include="Legacy\LegacyMSBuildReferenceResolver.fsi" Condition="'$(MonoPackaging)' != 'true'" />
-    <Compile Include="Legacy\LegacyMSBuildReferenceResolver.fs" Condition="'$(MonoPackaging)' != 'true'" />
+    <Compile Include="Legacy\LegacyMSBuildReferenceResolver.fsi" Condition="'$(NO_MSBUILD)' != 'true'" />
+    <Compile Include="Legacy\LegacyMSBuildReferenceResolver.fs" Condition="'$(NO_MSBUILD)' != 'true'" />
     <!-- an old API for testing the compiler and gathering diagnostics in-memory -->
-    <Compile Include="Legacy\LegacyHostedCompilerForTesting.fs" Condition="'$(MonoPackaging)' != 'true'" />
+    <Compile Include="Legacy\LegacyHostedCompilerForTesting.fs" Condition="'$(NO_MSBUILD)' != 'true'" />
   </ItemGroup>
 
   <ItemGroup>
@@ -527,9 +532,9 @@
     <PackageReference Include="System.Buffers" Version="$(SystemBuffersVersion)" />
     <PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildVersion)" />
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="$(MicrosoftBuildVersion)" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildVersion)" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildVersion)" Condition="'$(NO_MSBUILD)' != 'true'" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="$(MicrosoftBuildVersion)" Condition="'$(NO_MSBUILD)' != 'true'" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildVersion)" Condition="'$(NO_MSBUILD)' != 'true'" />
   </ItemGroup>
 
 </Project>

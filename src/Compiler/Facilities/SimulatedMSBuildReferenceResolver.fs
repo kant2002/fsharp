@@ -5,9 +5,12 @@ module internal FSharp.Compiler.CodeAnalysis.SimulatedMSBuildReferenceResolver
 open System
 open System.IO
 open System.Reflection
-open Microsoft.Build.Utilities
 open Internal.Utilities.Library
 open FSharp.Compiler.IO
+
+#if !NO_MSBUILD
+open Microsoft.Build.Utilities
+#endif
 
 // ATTENTION!: the following code needs to be updated every time we are switching to the new MSBuild version because new .NET framework version was released
 // 1. List of frameworks
@@ -49,6 +52,7 @@ let SupportedDesktopFrameworkVersions =
 
 let private SimulatedMSBuildResolver =
 
+#if !NO_MSBUILD
     /// Get the path to the .NET Framework implementation assemblies by using ToolLocationHelper.GetPathToDotNetFramework
     /// This is only used to specify the "last resort" path for assembly resolution.
     let GetPathToDotNetFrameworkImlpementationAssemblies v =
@@ -74,6 +78,7 @@ let private SimulatedMSBuildResolver =
             | null -> []
             | x -> [ x ]
         | _ -> []
+#endif
 
     let GetPathToDotNetFrameworkReferenceAssemblies version =
 #if NETSTANDARD
@@ -135,7 +140,10 @@ let private SimulatedMSBuildResolver =
                     yield fsharpCoreDir
                     yield implicitIncludeDir
                     yield! GetPathToDotNetFrameworkReferenceAssemblies targetFrameworkVersion
+
+#if !NO_MSBUILD
                     yield! GetPathToDotNetFrameworkImlpementationAssemblies targetFrameworkVersion
+#endif
                 ]
 
             for r, baggage in references do

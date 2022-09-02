@@ -65,6 +65,8 @@ val IsActivePatternName: name: string -> bool
 ///     A-B          -->  ``A-B``
 ///     AB           -->  AB
 ///     |A|_|        -->  |A|_|    this is an active pattern name, needs parens not backticks
+val AddBackticksToIdentifierIfNeeded: name: string -> string
+
 /// Removes double backticks if not necessary to make a valid identifier, e.g.
 ///     ``A``        --> A
 ///     ``A-B``      --> ``A-B``

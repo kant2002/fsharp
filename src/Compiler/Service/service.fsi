@@ -218,6 +218,8 @@ type public FSharpChecker =
         ?userOpName: string ->
             Async<FSharpProjectOptions * FSharpDiagnostic list>
 
+    member GetCachedScriptOptions: path: string -> FSharpProjectOptions option
+
     /// <summary>Get the FSharpProjectOptions implied by a set of command line arguments.</summary>
     ///
     /// <param name="projectFileName">Used to differentiate between projects and for the base directory of the project.</param>

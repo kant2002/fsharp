@@ -1655,6 +1655,7 @@ type ITypecheckResultsSink =
     abstract NotifyEnvWithScope: range * NameResolutionEnv * AccessorDomain -> unit
 
     abstract NotifyExprHasType: TType * NameResolutionEnv * AccessorDomain * range -> unit
+    abstract NotifyExprHasType2: TType * NameResolutionEnv * AccessorDomain * range -> unit
 
     abstract NotifyNameResolution: pos * item: Item * TyparInstantiation * ItemOccurence * NameResolutionEnv * AccessorDomain * range * replace: bool -> unit
 
@@ -2037,6 +2038,10 @@ type TcResultsSinkImpl(tcGlobals, ?sourceText: ISourceText) =
             if allowedRange m then
                 capturedExprTypings.Add((ty, nenv, ad, m))
 
+        member sink.NotifyExprHasType2(ty, nenv, ad, m) =
+            if allowedRange m then
+                capturedExprTypings.Add((ty, nenv, ad, m.MakeSynthetic()))
+
         member sink.NotifyNameResolution(endPos, item, tpinst, occurenceType, nenv, ad, m, replace) =
             if allowedRange m then
                 if replace then
@@ -2109,6 +2114,11 @@ let CallExprHasTypeSink (sink: TcResultsSink) (m: range, nenv, ty, ad) =
     match sink.CurrentSink with
     | None -> ()
     | Some sink -> sink.NotifyExprHasType(ty, nenv, ad, m)
+
+let CallExprHasTypeSink2 (sink: TcResultsSink) (m: range, nenv, ty, ad) =
+    match sink.CurrentSink with
+    | None -> ()
+    | Some sink -> sink.NotifyExprHasType2(ty, nenv, ad, m)
 
 let CallOpenDeclarationSink (sink: TcResultsSink) (openDeclaration: OpenDeclaration) =
     match sink.CurrentSink with

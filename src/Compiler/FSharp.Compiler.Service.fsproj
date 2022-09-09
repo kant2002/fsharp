@@ -25,9 +25,9 @@
     <FsYaccOutputFolder>$(IntermediateOutputPath)$(TargetFramework)\</FsYaccOutputFolder>
     <FsLexOutputFolder>$(IntermediateOutputPath)$(TargetFramework)\</FsLexOutputFolder>
     <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>fcs.snk</AssemblyOriginatorKeyFile>
-    <VersionPrefix>2022.1.0</VersionPrefix>
+<!--    <SignAssembly>true</SignAssembly>-->
+<!--    <AssemblyOriginatorKeyFile>fcs.snk</AssemblyOriginatorKeyFile>-->
+    <VersionPrefix>2022.3.0</VersionPrefix>
     <OtherFlags Condition="'$(SolutionName)' == 'FSharp.Compiler.Service'">$(OtherFlags) --version:$(VersionPrefix)</OtherFlags>
   </PropertyGroup>
 

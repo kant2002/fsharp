@@ -1792,9 +1792,12 @@ let BuildFieldMap (cenv: cenv) env isPartial ty flds m =
     let fldResolutions =
         let allFields = flds |> List.map (fun ((_, ident), _) -> ident)
         flds
-        |> List.map (fun (fld, fldExpr) ->
-            let frefSet = ResolveField cenv.tcSink cenv.nameResolver env.eNameResEnv ad ty fld allFields
-            fld, frefSet, fldExpr)
+        |> List.choose (fun (fld, fldExpr) ->
+            try
+                let frefSet = ResolveField cenv.tcSink cenv.nameResolver env.eNameResEnv ad ty fld allFields
+                Some(fld, frefSet, fldExpr)
+            with _ ->
+                None)
 
     let relevantTypeSets =
         fldResolutions |> List.map (fun (_, frefSet, _) ->
@@ -1853,7 +1856,9 @@ let BuildFieldMap (cenv: cenv) env isPartial ty flds m =
                     else
                         Map.add fref2.FieldName fldExpr fs, (fref2.FieldName, fldExpr) :: rfldsList
 
-                | _ -> error(Error(FSComp.SR.tcRecordFieldInconsistentTypes(), m)))
+                | _ ->
+                    errorR(Error(FSComp.SR.tcRecordFieldInconsistentTypes(), m))
+                    fs, rfldsList)
     tinst, tcref, fldsmap, List.rev rfldsList
 
 let rec ApplyUnionCaseOrExn (makerForUnionCase, makerForExnTag) m (cenv: cenv) env overallTy item =

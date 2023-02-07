@@ -14,6 +14,24 @@ open Microsoft.CodeAnalysis.CSharp
 open TestFramework
 open NUnit.Framework
 
+type TheoryForNETCOREAPPAttribute() = 
+    inherit Xunit.TheoryAttribute()
+    #if !NETCOREAPP    
+        do base.Skip <- "Only NETCOREAPP is supported runtime for this kind of test."
+    #endif
+
+type FactForNETCOREAPPAttribute() =
+    inherit Xunit.FactAttribute()
+    #if !NETCOREAPP    
+        do base.Skip <- "Only NETCOREAPP is supported runtime for this kind of test."
+    #endif
+
+type FactForDESKTOPAttribute() =
+    inherit Xunit.FactAttribute()
+    #if NETCOREAPP
+        do base.Skip <- "NETCOREAPP is not supported runtime for this kind of test, it is intended for DESKTOP only"
+    #endif
+
 // This file mimics how Roslyn handles their compilation references for compilation testing
 module Utilities =
 
@@ -120,7 +138,6 @@ module Utilities =
         <TargetFramework>$TARGETFRAMEWORK</TargetFramework>
         <UseFSharpPreview>true</UseFSharpPreview>
         <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
-        <DotnetFscCompilerPath>$DOTNETFSCCOMPILERPATH</DotnetFscCompilerPath>
   </PropertyGroup>
 
   <ItemGroup><Compile Include="Program.fs" /></ItemGroup>
@@ -171,7 +188,6 @@ let main argv = 0"""
             let pathToTemp = Path.Combine(pathToArtifacts, "Temp")
             let projectDirectory = Path.Combine(pathToTemp,Guid.NewGuid().ToString() + ".tmp")
             let pathToFSharpCore = typeof<RequireQualifiedAccessAttribute>.Assembly.Location
-            let dotNetFscCompilerPath = config.DOTNETFSCCOMPILERPATH
             try
                 try
                     Directory.CreateDirectory(projectDirectory) |> ignore
@@ -181,9 +197,9 @@ let main argv = 0"""
                     let directoryBuildTargetsFileName = Path.Combine(projectDirectory, "Directory.Build.targets")
                     let frameworkReferencesFileName = Path.Combine(projectDirectory, "FrameworkReferences.txt")
 #if NETCOREAPP
-                    File.WriteAllText(projectFileName, projectFile.Replace("$TARGETFRAMEWORK", "net7.0").Replace("$FSHARPCORELOCATION", pathToFSharpCore).Replace("$DOTNETFSCCOMPILERPATH", dotNetFscCompilerPath))
+                    File.WriteAllText(projectFileName, projectFile.Replace("$TARGETFRAMEWORK", "net7.0").Replace("$FSHARPCORELOCATION", pathToFSharpCore))
 #else
-                    File.WriteAllText(projectFileName, projectFile.Replace("$TARGETFRAMEWORK", "net472").Replace("$FSHARPCORELOCATION", pathToFSharpCore).Replace("$DOTNETFSCCOMPILERPATH", dotNetFscCompilerPath))
+                    File.WriteAllText(projectFileName, projectFile.Replace("$TARGETFRAMEWORK", "net472").Replace("$FSHARPCORELOCATION", pathToFSharpCore))
 #endif
                     File.WriteAllText(programFsFileName, programFs)
                     File.WriteAllText(directoryBuildPropsFileName, directoryBuildProps)

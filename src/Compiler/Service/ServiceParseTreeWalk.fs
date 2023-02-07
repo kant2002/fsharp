@@ -260,12 +260,10 @@ module SyntaxTraversal =
             | [ x ] -> x ()
             | _ ->
 #if DEBUG
-                assert false
-                failwithf "multiple disjoint AST node ranges claimed to contain (%A) from %+A" pos debugObj
-#else
+                printf "multiple disjoint AST node ranges claimed to contain (%A) from %+A" pos debugObj
+#endif
                 ignore debugObj
                 None
-#endif
 
     /// traverse an implementation file walking all the way down to SynExpr or TypeAbbrev at a particular location
     ///
@@ -596,7 +594,7 @@ module SyntaxTraversal =
 
                 | SynExpr.TypeApp (synExpr, _, _synTypeList, _commas, _, _, _range) -> traverseSynExpr synExpr
 
-                | SynExpr.LetOrUse (_, isRecursive, synBindingList, synExpr, range, _) ->
+                | SynExpr.LetOrUse (isRecursive, _, synBindingList, synExpr, range, _) ->
                     match visitor.VisitLetOrUse(path, isRecursive, traverseSynBinding path, synBindingList, range) with
                     | None ->
                         [
@@ -903,7 +901,7 @@ module SyntaxTraversal =
                     traverseSynBinding path getBinding
                     |> Option.orElseWith (fun () -> traverseSynBinding path setBinding)
 
-            | SynMemberDefn.ImplicitCtor (_synAccessOption, _synAttributes, simplePats, _identOption, _doc, _range) ->
+            | SynMemberDefn.ImplicitCtor (ctorArgs = simplePats) ->
                 match simplePats with
                 | SynSimplePats.SimplePats (simplePats, _) -> visitor.VisitSimplePats(path, simplePats)
                 | _ -> None

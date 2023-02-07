@@ -149,11 +149,6 @@ let isInfix token =
     | QMARK_QMARK -> true
     | _ -> false
 
-let isNonAssocInfixToken token = 
-    match token with 
-    | EQUALS -> true
-    | _ -> false
-
 let infixTokenLength token = 
     match token with 
     | COMMA -> 1
@@ -391,16 +386,6 @@ let rec isWithAugmentBlockContinuator token =
     //                          end 
     | END -> true    
     | ODUMMY token -> isWithAugmentBlockContinuator token
-    | _ -> false
-
-let isLongIdentifier token =
-    match token with
-    | IDENT _ | DOT -> true
-    | _ -> false
-
-let isLongIdentifierOrGlobal token =
-    match token with
-    | GLOBAL | IDENT _ | DOT -> true
     | _ -> false
 
 let isAtomicExprEndToken token = 
@@ -699,6 +684,8 @@ type LexFilterImpl (
     let mutable prevWasAtomicEnd = false
     
     let peekInitial() =
+        // Forget the lexbuf state we might have saved from previous input
+        haveLexbufState <- false
         let initialLookaheadTokenTup = popNextTokenTup()
         if debug then dprintf "first token: initialLookaheadTokenLexbufState = %a\n" outputPos (startPosOfTokenTup initialLookaheadTokenTup)
         

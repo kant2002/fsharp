@@ -1,6 +1,6 @@
 ﻿# Компілятор F#, базова бібліотека F#, та інструменти редагування Ф#
 [![Build Status](https://dev.azure.com/dnceng-public/public/_apis/build/status/dotnet/fsharp/fsharp-ci?branchName=main)](https://dev.azure.com/dnceng-public/public/_build/latest?definitionId=90&branchName=main)
-[![Help Wanted](https://img.shields.io/github/issues/dotnet/fsharp/help%20wanted?style=flat-square&color=%232EA043&label=help%20wanted)](https://github.com/dotnet/runtime/labels/help%20wanted)
+[![Help Wanted](https://img.shields.io/github/issues/dotnet/fsharp/help%20wanted?style=flat-square&color=%232EA043&label=help%20wanted)](https://github.com/dotnet/fsharp/labels/help%20wanted)
 
 Ця гілка для роботи над локалізованою версією F#.
 Мета цього єксперіменту створити 

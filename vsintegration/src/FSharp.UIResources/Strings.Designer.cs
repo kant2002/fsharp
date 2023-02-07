@@ -124,11 +124,29 @@ namespace Microsoft.VisualStudio.FSharp.UIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable fast find references &amp; rename (experimental).
+        /// </summary>
+        public static string Enable_Fast_Find_References {
+            get {
+                return ResourceManager.GetString("Enable_Fast_Find_References", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Enable in-memory cross project references.
         /// </summary>
         public static string Enable_in_memory_cross_project_references {
             get {
                 return ResourceManager.GetString("Enable_in_memory_cross_project_references", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use live (unsaved) buffers for checking (restart required).
+        /// </summary>
+        public static string Enable_Live_Buffers {
+            get {
+                return ResourceManager.GetString("Enable_Live_Buffers", resourceCulture);
             }
         }
         
@@ -196,6 +214,15 @@ namespace Microsoft.VisualStudio.FSharp.UIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find References Performance Options.
+        /// </summary>
+        public static string Find_References_Performance {
+            get {
+                return ResourceManager.GetString("Find_References_Performance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Re-format indentation on paste (Experimental).
         /// </summary>
         public static string Format_on_paste {
@@ -228,6 +255,15 @@ namespace Microsoft.VisualStudio.FSharp.UIResources {
         public static string Language_Service_Performance {
             get {
                 return ResourceManager.GetString("Language_Service_Performance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live Buffers (experimental).
+        /// </summary>
+        public static string LiveBuffers {
+            get {
+                return ResourceManager.GetString("LiveBuffers", resourceCulture);
             }
         }
         
@@ -304,7 +340,7 @@ namespace Microsoft.VisualStudio.FSharp.UIResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Display inline parameter name hints (experimental).
+        ///   Looks up a localized string similar to Display inline parameter name hints (preview).
         /// </summary>
         public static string Show_Inline_Parameter_Name_Hints {
             get {
@@ -313,7 +349,7 @@ namespace Microsoft.VisualStudio.FSharp.UIResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Display inline type hints (experimental).
+        ///   Looks up a localized string similar to Display inline type hints (preview).
         /// </summary>
         public static string Show_Inline_Type_Hints {
             get {

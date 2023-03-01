@@ -48,7 +48,7 @@
 folder "InstallDir:Common7\IDE\CommonExtensions\Microsoft\FSharp\Tools\%(_XlfLanguages.Identity)"
   file source="$(BinariesFolder)FSharp.Build\$(Configuration)\netstandard2.0\%(_XlfLanguages.Identity)\FSharp.Build.resources.dll"
   file source="$(BinariesFolder)FSharp.Compiler.Interactive.Settings\$(Configuration)\netstandard2.0\%(_XlfLanguages.Identity)\FSharp.Compiler.Interactive.Settings.resources.dll"
-  file source="$(BinariesFolder)FSharp.Compiler.Service\$(Configuration)\netstandard2.0\%(_XlfLanguages.Identity)\FSharp.Compiler.Service.resources.dll"
+  file source="$(BinariesFolder)FSharp.Compiler.Service\$(Configuration)\netstandard2.0\%(_XlfLanguages.Identity)\FSharp.Compiler.Service.Ukrainian.resources.dll"
   file source="$(BinariesFolder)FSharp.Core\$(Configuration)\netstandard2.0\%(_XlfLanguages.Identity)\FSharp.Core.resources.dll"
 ]]>
       </_Line>
@@ -94,8 +94,8 @@ folder "InstallDir:Common7\IDE\CommonExtensions\Microsoft\FSharp\Tools"
   file source="$(BinariesFolder)fsiArm64\$(Configuration)\$(TargetFramework)\fsiArm64.exe.config"
   file source="$(BinariesFolder)FSharp.Compiler.Interactive.Settings\$(Configuration)\netstandard2.0\FSharp.Compiler.Interactive.Settings.dll" vs.file.ngen=yes vs.file.ngenArchitecture=All vs.file.ngenPriority=2
   file source="$(BinariesFolder)FSharp.Compiler.Interactive.Settings\$(Configuration)\netstandard2.0\FSharp.Compiler.Interactive.Settings.xml"
-  file source="$(BinariesFolder)fsc\$(Configuration)\$(TargetFramework)\FSharp.Compiler.Service.dll" vs.file.ngen=yes vs.file.ngenArchitecture=All vs.file.ngenPriority=2
-  file source="$(BinariesFolder)fsc\$(Configuration)\$(TargetFramework)\FSharp.Compiler.Service.xml"
+  file source="$(BinariesFolder)fsc\$(Configuration)\$(TargetFramework)\FSharp.Compiler.Service.Ukrainian.dll" vs.file.ngen=yes vs.file.ngenArchitecture=All vs.file.ngenPriority=2
+  file source="$(BinariesFolder)fsc\$(Configuration)\$(TargetFramework)\FSharp.Compiler.Service.Ukrainian.xml"
   file source="$(BinariesFolder)fsc\$(Configuration)\$(TargetFramework)\System.Buffers.dll"
   file source="$(BinariesFolder)fsc\$(Configuration)\$(TargetFramework)\System.Collections.Immutable.dll"
   file source="$(BinariesFolder)fsc\$(Configuration)\$(TargetFramework)\System.Diagnostics.DiagnosticSource.dll"

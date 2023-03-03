@@ -41,7 +41,7 @@
     <PackageId>FSharp.Compiler.Service.Ukrainian</PackageId>
     <NuspecFile>FSharp.Compiler.Service.nuspec</NuspecFile>
     <IsPackable>true</IsPackable>
-    <PackageDescription>The F# Compiler Services package for F# $(FSLanguageVersion) exposes additional functionality for implementing F# language bindings, additional tools based on the compiler or refactoring tools. The package also includes F# interactive service that can be used for embedding F# scripting into your applications.  Contains code from the F# Software Foundation.</PackageDescription>
+    <PackageDescription>Пакет сервісив компілятора Ф# для F# $(FSLanguageVersion) виставляє додатковий функціонал для реалізації мовних прив'язок Ф#, додаткових інструментів на основі компілятора або інструментів рефакторінга. Пакет також включає інтерактивний сервіс Ф#, який можна використовувати для вбудовування сценаріїв Ф# у ваші програми. Містить код із F# Software Foundation.</PackageDescription>
     <PackageReleaseNotes>/blob/main/release-notes.md#FSharp-Compiler-Service-$(FSharpCompilerServiceReleaseNotesVersion)</PackageReleaseNotes>
     <PackageTags>F#, fsharp, interactive, compiler, editor</PackageTags>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>

@@ -571,7 +571,7 @@ type internal TypeCheckInfo
             match meth.GetParamDatas(amap, m, meth.FormalMethodInst) with
             | x :: _ ->
                 x
-                |> List.choose (fun (ParamData (_isParamArray, _isInArg, _isOutArg, _optArgInfo, _callerInfo, name, _, ty)) ->
+                |> List.choose (fun (ParamData (_isParamArray, _isInArg, _isOutArg, _optArgInfo, _callerInfo, name, _, ty), _) ->
                     match name with
                     | Some id -> Some(Item.ArgName(Some id, ty, Some(ArgumentContainer.Method meth), id.idRange))
                     | None -> None)
@@ -1262,7 +1262,7 @@ type internal TypeCheckInfo
             // No completion at '...: string'
             | Some (CompletionContext.RecordField (RecordContext.Declaration true)) -> None
 
-            // Completion at ' SomeMethod( ... ) ' with named arguments
+            // Completion at ' SomeMethod( ... ) ' or ' [<SomeAttribute( ... )>] ' with named arguments
             | Some (CompletionContext.ParameterList (endPos, fields)) ->
                 let results = GetNamedParametersAndSettableFields endPos
 
@@ -1435,7 +1435,7 @@ type internal TypeCheckInfo
 
     member _.GetVisibleNamespacesAndModulesAtPosition(cursorPos: pos) : ModuleOrNamespaceRef list =
         let (nenv, ad), m = GetBestEnvForPos cursorPos
-        GetVisibleNamespacesAndModulesAtPoint ncenv nenv m ad
+        GetVisibleNamespacesAndModulesAtPoint ncenv nenv OpenQualified m ad
 
     /// Determines if a long ident is resolvable at a specific point.
     member _.IsRelativeNameResolvable(cursorPos: pos, plid: string list, item: Item) : bool =

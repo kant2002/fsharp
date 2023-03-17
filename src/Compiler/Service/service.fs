@@ -156,14 +156,6 @@ module CompileHelpers =
 
         diagnostics.ToArray(), result
 
-    let setOutputStreams execute =
-        // Set the output streams, if requested
-        match execute with
-        | Some (writer, error) ->
-            Console.SetOut writer
-            Console.SetError error
-        | None -> ()
-
 type SourceTextHash = int64
 type CacheStamp = int64
 type FileName = string
@@ -192,7 +184,6 @@ type BackgroundCompiler
         keepAllBackgroundSymbolUses,
         enableBackgroundItemKeyStoreAndSemanticClassification,
         enablePartialTypeChecking,
-        enableParallelCheckingWithSignatureFiles,
         parallelReferenceResolution,
         captureIdentifiersWhenParsing,
         getSource: (string -> ISourceText option) option,
@@ -326,7 +317,6 @@ type BackgroundCompiler
                     keepAllBackgroundSymbolUses,
                     enableBackgroundItemKeyStoreAndSemanticClassification,
                     enablePartialTypeChecking,
-                    enableParallelCheckingWithSignatureFiles,
                     dependencyProvider,
                     parallelReferenceResolution,
                     captureIdentifiersWhenParsing,
@@ -1262,7 +1252,6 @@ type FSharpChecker
         keepAllBackgroundSymbolUses,
         enableBackgroundItemKeyStoreAndSemanticClassification,
         enablePartialTypeChecking,
-        enableParallelCheckingWithSignatureFiles,
         parallelReferenceResolution,
         captureIdentifiersWhenParsing,
         getSource,
@@ -1280,7 +1269,6 @@ type FSharpChecker
             keepAllBackgroundSymbolUses,
             enableBackgroundItemKeyStoreAndSemanticClassification,
             enablePartialTypeChecking,
-            enableParallelCheckingWithSignatureFiles,
             parallelReferenceResolution,
             captureIdentifiersWhenParsing,
             getSource,
@@ -1326,7 +1314,6 @@ type FSharpChecker
             ?keepAllBackgroundSymbolUses,
             ?enableBackgroundItemKeyStoreAndSemanticClassification,
             ?enablePartialTypeChecking,
-            ?enableParallelCheckingWithSignatureFiles,
             ?parallelReferenceResolution: bool,
             ?captureIdentifiersWhenParsing: bool,
             ?documentSource: DocumentSource
@@ -1350,7 +1337,6 @@ type FSharpChecker
             defaultArg enableBackgroundItemKeyStoreAndSemanticClassification false
 
         let enablePartialTypeChecking = defaultArg enablePartialTypeChecking false
-        let enableParallelCheckingWithSignatureFiles = defaultArg enableParallelCheckingWithSignatureFiles false
         let captureIdentifiersWhenParsing = defaultArg captureIdentifiersWhenParsing false
 
         let useChangeNotifications =
@@ -1373,7 +1359,6 @@ type FSharpChecker
             keepAllBackgroundSymbolUses,
             enableBackgroundItemKeyStoreAndSemanticClassification,
             enablePartialTypeChecking,
-            enableParallelCheckingWithSignatureFiles,
             parallelReferenceResolution,
             captureIdentifiersWhenParsing,
             (match documentSource with

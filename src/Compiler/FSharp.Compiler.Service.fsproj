@@ -12,6 +12,7 @@
     <NoWarn>$(NoWarn);NU5125</NoWarn>
     <AssemblyName>FSharp.Compiler.Service.Ukrainian</AssemblyName>
     <AllowCrossTargeting>true</AllowCrossTargeting>
+    <DefineConstants>$(DefineConstants);FABLE_CLI</DefineConstants>
     <DefineConstants>$(DefineConstants);COMPILER</DefineConstants>
     <DefineConstants Condition="'$(FSHARPCORE_USE_PACKAGE)' == 'true'">$(DefineConstants);FSHARPCORE_USE_PACKAGE</DefineConstants>
     <OtherFlags>$(OtherFlags) --extraoptimizationloops:1</OtherFlags>
@@ -381,6 +382,23 @@
     <Compile Include="Driver\CompilerImports.fs" />
     <Compile Include="Driver\CompilerDiagnostics.fsi" />
     <Compile Include="Driver\CompilerDiagnostics.fs" />
+    <Compile Include="Driver\GraphChecking\Continuation.fsi" />
+    <Compile Include="Driver\GraphChecking\Continuation.fs" />
+    <Compile Include="Driver\GraphChecking\Types.fsi" />
+    <Compile Include="Driver\GraphChecking\Types.fs" />
+    <Compile Include="Driver\GraphChecking\Graph.fsi" />
+    <Compile Include="Driver\GraphChecking\Graph.fs" />
+    <Compile Include="Driver\GraphChecking\TrieMapping.fsi" />
+    <Compile Include="Driver\GraphChecking\TrieMapping.fs" />
+    <Compile Include="Driver\GraphChecking\FileContentMapping.fsi" />
+    <Compile Include="Driver\GraphChecking\FileContentMapping.fs" />
+    <Compile Include="Driver\GraphChecking\DependencyResolution.fsi" />
+    <Compile Include="Driver\GraphChecking\DependencyResolution.fs" />
+    <Compile Include="Driver\GraphChecking\GraphProcessing.fsi" />
+    <Compile Include="Driver\GraphChecking\GraphProcessing.fs" />
+    <Compile Include="Driver\GraphChecking\TypeCheckingGraphProcessing.fsi" />
+    <Compile Include="Driver\GraphChecking\TypeCheckingGraphProcessing.fs" />
+    <Content Include="Driver\GraphChecking\Docs.md" />
     <Compile Include="Driver\ParseAndCheckInputs.fsi" />
     <Compile Include="Driver\ParseAndCheckInputs.fs" />
     <Compile Include="Driver\ScriptClosure.fsi" />
@@ -463,6 +481,8 @@
     <Compile Include="Interactive\ControlledExecution.fs" />
     <Compile Include="Interactive\fsi.fsi" />
     <Compile Include="Interactive\fsi.fs" />
+    <Compile Include="../../fcs/service_slim.fs" />
+
     <!-- A legacy resolver used to help with scripting diagnostics in the Visual Studio tools -->
     <!-- an old API for testing the compiler and gathering diagnostics in-memory -->
     <Compile Include="Legacy\LegacyHostedCompilerForTesting.fs" Condition="'$(MonoPackaging)' != 'true'" />

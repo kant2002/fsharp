@@ -184,6 +184,10 @@ type x with
 ### Тестові проєкти
 
 - [ВеселШарп](https://github.com/kant2002/FunSharp) Весела кросс-платформенна графична біблиотека, базуючаяся на библиотеці із Small Basic, зроблена спеціально для Ф# та C#.
+- [.NET Interactive ядро для Ф#](https://github.com/kant2002/fsharp-kernel-ua)
+- [Адаптатція FSharp.Core до української мови](https://github.com/kant2002/FSharp.Core.Multilingual)
+- [Інтерактивний сайт де можна спробувати мову Ф#](https://github.com/kant2002/fable-repl-ua). Сам інтерактивний репл можна побачити за адресою https://kant2002.github.io/fable-repl-ua/
+- [Конфігурація для Binder] де можна погратися із Ф#. Запуск Binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kant2002/fsharp-ua-notebook/main)
 
 ### Ніякий вклад не замалий
 

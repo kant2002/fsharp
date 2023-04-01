@@ -1,18 +1,56 @@
-# The F# compiler, F# core library, and F# editor tools
+﻿# Компілятор F#, базова бібліотека F#, та інструменти редагування Ф# 
+Ця гілка для роботи над локалізованою версією F#.
+Мета цього єксперіменту створити 
 
-You're invited to contribute to future releases of the F# compiler, core library, and tools. Development of this repository can be done on any OS supported by [.NET](https://dotnet.microsoft.com/).
+- [ ] Створити локалізовану мову програмування
+    - [x] Пропонувати переклад ключових слів
+    - [ ] Пропонувати переклад псевдо-ключових слів таких як async/None/Some/int/float
+    - [ ] Зробити приклади базових мовних конструкцій
+    - [ ] Створити локалізовану на українську мову базову бібліотеку
+- [ ] Створити локалізовани інструменти редагування
+    - [ ] Візуал Студія
+      - [x] Розробка
+      - [ ] Упакування
+    - [ ] Іонід
+      - [ ] Розробка
+      - [ ] Упакування
+    - [ ] Райдер
+      - [ ] Розробка
+      - [ ] Упакування
+    - [x] .NET Polyglot Notebooks
+      - [x] [Розробка](https://github.com/kant2002/fsharp-kernel-ua)
+      - [x] [Упакування](https://www.nuget.org/packages/DotNetInteractive.FSharp.Ukrainian)
+- [ ] Перекласти декілька відомих проектів на українську
+    - [ ] Мати можливість роботи с консолью
+    - [ ] Мати можливість робити запроси до веб
+    - [ ] Мати можливість роботи з файлами
+    - [ ] Мати можливість роботи з базами даних
+    - [ ] Мати можливість створення десктопних програм
+    - [ ] Мати можливість створення веб-додатків
 
-You will also need the latest .NET 6 SDK installed from [here](https://dotnet.microsoft.com/download/dotnet/6.0).
+Лише частина роботи буде розміщена у цьому репозіторії, інші частини роботи будуть проводиться у форках відповідних проектів.
 
-## Contributing
+Ми запрошуємо вас зробити внесок у майбутні випуски Ф# компілятра, базової біблітеки, та інструментів. Розробка цього репозіторія може проводитися на будь якій ОС яка підтримує [.NET](https://dotnet.microsoft.com/).
 
-### Quickstart on Windows
+Ви також повинні мати встановлений .NET 7 SDK [звідси](https://dotnet.microsoft.com/download/dotnet/7.0).
 
-Build from the command line:
+## Нащо ций діалект
+
+Коли я створював цей діалект моя мотивація була полегшити перші місяці(або роки) навчання програмуванню та процедурному мисленню. За свою кар'єру, я дуже часто бачив помилки коли
+люди плутали цілі використання тієї, чи іншої концепції у програмуванні. Я вважаю що це на сам перед тому що коли люди вчаться програмуванню, вони вчать англійску мову 
+водночас, потім вони читають статі на англійскій, і використовують сленг. Як на мене це робить навчання не англомовним людям більш важким, і якщо людина із социально-вразливого
+шару суспільства, це додає що один бар'єр, яких як на мене і так забагато. Наприклад є Scratch, має безліч перекладів на інші мови, чому ми не можемо зробити так 
+само із мовами програмування? Також я не можу відкинути аргументи що навчатися краще якійсь індустріальній мові. Саме тому (а також тому що це було відносно легко зробити) з'явився цей діалект F# 
+де ви можете писати як на F# або цілком на українскій.
+
+## Внести вклад
+
+### Швидкий старт на Windows
+
+Збудувати із командної строки:
 
 ```shell
-build.cmd
-```
+build.cmd```
 
 The build depends on an installation of Visual Studio. To build the compiler without this dependency use:
 
@@ -20,42 +58,136 @@ The build depends on an installation of Visual Studio. To build the compiler wit
 build.cmd -noVisualStudio
 ```
 
-After it's finished, open either `FSharp.sln` or `VisualFSharp.sln` in your editor of choice. The latter solution is larger but includes the F# tools for Visual Studio and its associated infrastructure.
+Після того як збудова завершена, відкрийте або `FSharp.sln` або `VisualFSharp.sln` у редакторі на ваш смак. Остання рішення більше але воно включає Ф# інструменти для Visual Studio та супутню інфраструктуру.
 
-### Quickstart on Linux or macOS
+### Швидкий старт на Linux або macOS
 
-Build from the command line:
+Збудувати із командної строки:
 
 ```shell
 ./build.sh
 ```
 
-After it's finished, open `FSharp.sln` in your editor of choice.
+Після того як збудова завершена, відкрийте `FSharp.sln` у редакторі на ваш смак.
 
-### Documentation for contributors
+### Документація для співвкладників
 
 * The [Compiler Documentation](docs/index.md) is essential reading for any larger contributions to the F# compiler codebase and contains links to learning videos, architecture diagrams and other resources.
-
 * The same docs are also published as the [The F# Compiler Guide](https://fsharp.github.io/fsharp-compiler-docs/). It also contains the public searchable docs for FSharp.Compiler.Service component.
 
 * See [DEVGUIDE.md](DEVGUIDE.md) for more details on configurations for building the codebase. In practice, you only really need to run `build.cmd`/`build.sh`.
 
 * See [TESTGUIDE.md](TESTGUIDE.md) for information about the various test suites in this codebase and how to run them individually.
 
-### Documentation for F# community
+### Докуметація для Ф# громади
 
 * [The F# Documentation](https://docs.microsoft.com/dotnet/fsharp/) is the primary documentation for F#. The source for the content is [here](https://github.com/dotnet/docs/tree/main/docs/fsharp).
-
 * [The F# Language Design Process](https://github.com/fsharp/fslang-design/) is the fundamental design process for the language, from [suggestions](https://github.com/fsharp/fslang-suggestions) to completed RFCs.  There are also [tooling RFCs](https://github.com/fsharp/fslang-design/tree/main/tooling) for some topics where cross-community co-operation and visibility is most useful.
 
 * [The F# Language Specification](https://fsharp.org/specs/language-spec/) is an in-depth description of the F# language. This is essential for understanding some behaviors of the F# compiler and some of the rules within the compiler codebase. For example, the order and way name resolution happens is specified here, which greatly impacts how the code in Name Resolutions works and why certain decisions are made.
 
-### No contribution is too small
+### Змінені ключові слова
 
-Even if you find a single-character typo, we're happy to take the change! Although the codebase can feel daunting for beginners, we and other contributors are happy to help you along.
+Нижче приведени приклади змінених ключових слів. Італіком відзначені слова, переклад яких є сумнівним.
+
+| F# | Ф# |
+| -------- | ---------- |
+| abstract | абстрактний |
+| and | та |
+| as | як |
+| assert | ствердити |
+| asr | -- |
+| base | база |
+| begin | *початок* | 
+| class | клас |
+| const | конст |
+| default | *замовчання* |
+| delegate | делегат |
+| do | зробити |
+| done | зроблено |
+| downcast | -- |
+| downto | -- |
+| elif | інякщо |
+| else | інакше |
+| end | кінець |
+| exception | виключення |
+| extern | зовнішній |
+| false | ложь |
+| finally | востаннє |
+| fixed | *фіксовано* |
+| for | для |
+| fun | фун |
+| function | функція |
+| global | глобальний |
+| if | якщо |
+| in | у |
+| inherit | успадкує |
+| inline | інлайн |
+| interface | інтерфейс |
+| internal | внутрішній |
+| land | -- |
+| lazy | ледачий |
+| let | нехай |
+| lor | -- |
+| lsl | -- |
+| lsr | -- |
+| lxor | -- |
+| match | *відповідає* |
+| member | *член* |
+| mod | мод |
+| module | модуль |
+| mutable | змінливий |
+| namespace | простір |
+| new | *новий* |
+| null | *нуль* |
+| of | *з* |
+| open | відкрити |
+| or | або |
+| override | перевизначити |
+| private | приватний |
+| public | відкритий |
+| rec | рек |
+| return | повернути |
+| sig | сіг |
+| static | статичний |
+| struct | структ |
+| then | тоді |
+| to | до |
+| true | істина |
+| try | спробувати |
+| type | тип |
+| upcast | -- |
+| use | вживати |
+| val | знач |
+| void | пусто |
+| when | коли |
+| while | доки |
+| with | із |
+| yield | поступатися |
+
+Приклади над якими треба розмірковувати як перекласти ключові слова.
+
+```
+type x with
+	member this.test(name: string) = 
+		match name with
+			| "1" -> true
+			| _ -> false
+```
+
+### Тестові проєкти
+
+- [ВеселШарп](https://github.com/kant2002/FunSharp) Весела кросс-платформенна графична біблиотека, базуючаяся на библиотеці із Small Basic, зроблена спеціально для Ф# та C#.
+- [.NET Interactive ядро для Ф#](https://github.com/kant2002/fsharp-kernel-ua)
+- [Адаптатція FSharp.Core до української мови](https://github.com/kant2002/FSharp.Core.Multilingual)
+- [Інтерактивний сайт де можна спробувати мову Ф#](https://github.com/kant2002/fable-repl-ua). Сам інтерактивний репл можна побачити за адресою https://kant2002.github.io/fable-repl-ua/
+- [Конфігурація для Binder] де можна погратися із Ф#. Запуск Binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kant2002/fsharp-ua-notebook/main)
+
+### Ніякий вклад не замалий
+
+Якщо ви знайдете навіть опечатку з одної літери, ми раді прийняти зміни! Навіть якщо кодова база може виглядати лячною для початківців, ми та інші співвкладники будемо раді допомогти вам і надалі.
 
 ## Build Status
-
 | Branch | Status |
 |:------:|:------:|
 |main|[![Build Status](https://dev.azure.com/dnceng/public/_apis/build/status/dotnet/fsharp/fsharp-ci?branchName=main)](https://dev.azure.com/dnceng/public/_build/latest?definitionId=496&branchName=main)|

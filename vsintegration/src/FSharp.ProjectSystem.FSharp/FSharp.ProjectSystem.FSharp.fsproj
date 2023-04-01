@@ -67,9 +67,9 @@
     </AssemblyAttribute>
 
     <AssemblyAttribute Include="Microsoft.VisualStudio.Shell.ProvideCodeBaseAttribute">
-      <AssemblyName>FSharp.Compiler.Service</AssemblyName>
+      <AssemblyName>FSharp.Compiler.Service.Ukrainian</AssemblyName>
       <Version>$(FSharpCompilerServiceVersion)</Version>
-      <CodeBase>$PackageFolder$\FSharp.Compiler.Service.dll</CodeBase>
+      <CodeBase>$PackageFolder$\FSharp.Compiler.Service.Ukrainian.dll</CodeBase>
     </AssemblyAttribute>
     <AssemblyAttribute Include="Microsoft.VisualStudio.Shell.ProvideCodeBaseAttribute">
       <AssemblyName>FSharp.Compiler.Server.Shared</AssemblyName>

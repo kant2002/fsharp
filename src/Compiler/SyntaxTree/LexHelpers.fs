@@ -309,77 +309,141 @@ module Keywords =
     let private keywordList =
         [
             FSHARP, "abstract", ABSTRACT
+            FSHARP, "абстрактний", ABSTRACT
             ALWAYS, "and", AND
+            ALWAYS, "та", AND
             ALWAYS, "as", AS
+            ALWAYS, "як", AS
             ALWAYS, "assert", ASSERT
+            ALWAYS, "ствердити", ASSERT
             ALWAYS, "asr", INFIX_STAR_STAR_OP "asr"
             ALWAYS, "base", BASE
+            ALWAYS, "база", BASE
             ALWAYS, "begin", BEGIN
+            ALWAYS, "початок", BEGIN
             ALWAYS, "class", CLASS
+            ALWAYS, "клас", CLASS
             FSHARP, "const", CONST
+            FSHARP, "конст", CONST
             FSHARP, "default", DEFAULT
+            FSHARP, "замовчання", DEFAULT
             FSHARP, "delegate", DELEGATE
+            FSHARP, "делегат", DELEGATE
             ALWAYS, "do", DO
+            ALWAYS, "зробити", DO
             ALWAYS, "done", DONE
+            ALWAYS, "зроблено", DONE
             FSHARP, "downcast", DOWNCAST
             ALWAYS, "downto", DOWNTO
             FSHARP, "elif", ELIF
+            FSHARP, "інякщо", ELIF
             ALWAYS, "else", ELSE
+            ALWAYS, "інакше", ELSE
             ALWAYS, "end", END
+            ALWAYS, "кінець", END
             ALWAYS, "exception", EXCEPTION
+            ALWAYS, "виключення", EXCEPTION
             FSHARP, "extern", EXTERN
+            FSHARP, "зовнішній", EXTERN
             ALWAYS, "false", FALSE
+            ALWAYS, "ложь", FALSE
             ALWAYS, "finally", FINALLY
+            ALWAYS, "востаннє", FINALLY
             FSHARP, "fixed", FIXED
+            FSHARP, "фіксовано", FIXED
             ALWAYS, "for", FOR
+            ALWAYS, "для", FOR
             ALWAYS, "fun", FUN
+            ALWAYS, "фун", FUN
             ALWAYS, "function", FUNCTION
+            ALWAYS, "функція", FUNCTION
             FSHARP, "global", GLOBAL
+            FSHARP, "глобальний", GLOBAL
             ALWAYS, "if", IF
+            ALWAYS, "якщо", IF
             ALWAYS, "in", IN
+            ALWAYS, "у", IN
             ALWAYS, "inherit", INHERIT
+            ALWAYS, "успадкує", INHERIT
             FSHARP, "inline", INLINE
+            FSHARP, "інлайн", INLINE
             FSHARP, "interface", INTERFACE
+            FSHARP, "інтерфейс", INTERFACE
             FSHARP, "internal", INTERNAL
+            FSHARP, "внутрішній", INTERNAL
             ALWAYS, "land", INFIX_STAR_DIV_MOD_OP "land"
             ALWAYS, "lazy", LAZY
+            ALWAYS, "ледачий", LAZY
             ALWAYS, "let", LET(false)
+            ALWAYS, "нехай", LET(false)
             ALWAYS, "lor", INFIX_STAR_DIV_MOD_OP "lor"
             ALWAYS, "lsl", INFIX_STAR_STAR_OP "lsl"
             ALWAYS, "lsr", INFIX_STAR_STAR_OP "lsr"
             ALWAYS, "lxor", INFIX_STAR_DIV_MOD_OP "lxor"
             ALWAYS, "match", MATCH
+            ALWAYS, "співстав", MATCH
+            ALWAYS, "відповідає", MATCH
             FSHARP, "member", MEMBER
+            FSHARP, "член", MEMBER
             ALWAYS, "mod", INFIX_STAR_DIV_MOD_OP "mod"
+            ALWAYS, "мод", INFIX_STAR_DIV_MOD_OP "мод"
             ALWAYS, "module", MODULE
+            ALWAYS, "модуль", MODULE
             ALWAYS, "mutable", MUTABLE
+            ALWAYS, "змінливий", MUTABLE
             FSHARP, "namespace", NAMESPACE
+            FSHARP, "простір", NAMESPACE
             ALWAYS, "new", NEW
+            ALWAYS, "новий", NEW
             FSHARP, "null", NULL
+            FSHARP, "нуль", NULL
             ALWAYS, "of", OF
+            ALWAYS, "з", OF
             ALWAYS, "open", OPEN
+            ALWAYS, "відкрити", OPEN
             ALWAYS, "or", OR
+            ALWAYS, "або", OR
             FSHARP, "override", OVERRIDE
+            FSHARP, "перевизначити", OVERRIDE
             ALWAYS, "private", PRIVATE
+            ALWAYS, "приватний", PRIVATE
             FSHARP, "public", PUBLIC
+            FSHARP, "відкритий", PUBLIC
             ALWAYS, "rec", REC
+            ALWAYS, "рек", REC
             FSHARP, "return", YIELD(false)
+            FSHARP, "повернути", YIELD(false)
             ALWAYS, "sig", SIG
+            ALWAYS, "сіг", SIG
             FSHARP, "static", STATIC
+            FSHARP, "статичний", STATIC
             ALWAYS, "struct", STRUCT
+            ALWAYS, "структ", STRUCT
             ALWAYS, "then", THEN
+            ALWAYS, "тоді", THEN
             ALWAYS, "to", TO
+            ALWAYS, "до", TO
             ALWAYS, "true", TRUE
+            ALWAYS, "істина", TRUE
             ALWAYS, "try", TRY
+            ALWAYS, "спробувати", TRY
             ALWAYS, "type", TYPE
+            ALWAYS, "тип", TYPE
             FSHARP, "upcast", UPCAST
             FSHARP, "use", LET(true)
+            FSHARP, "вживати", LET(true)
             ALWAYS, "val", VAL
+            ALWAYS, "знач", VAL
             FSHARP, "void", VOID
+            FSHARP, "пусто", VOID
             ALWAYS, "when", WHEN
+            ALWAYS, "коли", WHEN
             ALWAYS, "while", WHILE
+            ALWAYS, "доки", WHILE
             ALWAYS, "with", WITH
+            ALWAYS, "із", WITH
             FSHARP, "yield", YIELD(true)
+            FSHARP, "поступатися", YIELD(true)
             ALWAYS, "_", UNDERSCORE
             (*------- for prototyping and explaining offside rule *)
             FSHARP, "__token_OBLOCKSEP", OBLOCKSEP

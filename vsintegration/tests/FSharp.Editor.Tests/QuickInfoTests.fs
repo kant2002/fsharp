@@ -3,6 +3,7 @@
 namespace FSharp.Editor.Tests
 
 open Microsoft.VisualStudio.FSharp.Editor
+open Microsoft.VisualStudio.FSharp.Editor.QuickInfo
 open Xunit
 open FSharp.Editor.Tests.Helpers
 
@@ -26,7 +27,9 @@ module QuickInfo =
 
     let internal GetQuickInfo (code: string) caretPosition =
         async {
-            let document = RoslynTestHelpers.CreateSolution(code) |> RoslynTestHelpers.GetSingleDocument
+            let document =
+                RoslynTestHelpers.CreateSolution(code) |> RoslynTestHelpers.GetSingleDocument
+
             return! FSharpAsyncQuickInfoSource.ProvideQuickInfo(document, caretPosition)
         }
         |> Async.RunSynchronously
@@ -621,7 +624,7 @@ exception SomeError of ``thing wi$$th space``: string
             """
 type R = {| ``thing wi$$th space``: string |}
 """
-        
+
         let expected = "``thing with space``"
 
         let actual = GetQuickInfoTextFromCode code

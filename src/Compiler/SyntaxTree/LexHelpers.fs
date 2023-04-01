@@ -381,6 +381,7 @@ module Keywords =
             ALWAYS, "lsr", INFIX_STAR_STAR_OP "lsr"
             ALWAYS, "lxor", INFIX_STAR_DIV_MOD_OP "lxor"
             ALWAYS, "match", MATCH
+            ALWAYS, "співстав", MATCH
             ALWAYS, "відповідає", MATCH
             FSHARP, "member", MEMBER
             FSHARP, "член", MEMBER

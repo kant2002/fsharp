@@ -4,7 +4,7 @@
     <UsingToolXUnit>false</UsingToolXUnit>
     <!-- opt-in properties -->
     <UsingToolNetFrameworkReferenceAssemblies>true</UsingToolNetFrameworkReferenceAssemblies>
-    <UsingToolNuGetRepack>true</UsingToolNuGetRepack>
+    <UsingToolNuGetRepack>false</UsingToolNuGetRepack>
     <UsingToolSourceLink>true</UsingToolSourceLink>
     <UsingToolSymbolUploader>true</UsingToolSymbolUploader>
     <UsingToolVSSDK>true</UsingToolVSSDK>
@@ -40,7 +40,7 @@
     <FSharpCompilerServiceReleaseNotesVersion>$(FCSMajorVersion)$(FCSMinorVersion)$(FCSBuildVersion)</FSharpCompilerServiceReleaseNotesVersion>
     <!-- -->
     <!-- The current published nuget package -->
-    <FSharpCoreShippedPackageVersionValue>6.0.6</FSharpCoreShippedPackageVersionValue>
+    <FSharpCoreShippedPackageVersionValue>7.0.0</FSharpCoreShippedPackageVersionValue>
     <!-- -->
     <!-- The pattern for specifying the preview package -->
     <FSharpCorePreviewPackageVersionValue>$(FSCorePackageVersionValue)-$(PreReleaseVersionLabel).*</FSharpCorePreviewPackageVersionValue>

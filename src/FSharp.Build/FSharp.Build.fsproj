@@ -54,11 +54,17 @@
       <Pattern1>{{FSCorePackageVersionValue}}</Pattern1>
       <Replacement1>$(FSCorePackageVersionValue)</Replacement1>
     </NoneSubstituteText>
-    <NoneSubstituteText Include="Microsoft.FSharp.Core.NetSdk.props" CopyToOutputDirectory="PreserveNewest">
+    <NoneSubstituteText Include="Microsoft.FSharp.Core.NetSdk.props" CopyToOutputDirectory="PreserveNewest" Condition="'$(FSHARPCORE_USE_PACKAGE)' != 'true'">
       <TargetFileName>Microsoft.FSharp.Core.NetSdk.props</TargetFileName>
       <SubDir>Shipping\</SubDir>
       <Pattern1>{{FSCorePackageVersionValue}}</Pattern1>
       <Replacement1>$(FSCorePackageVersionValue)-$(VersionSuffix)</Replacement1>
+    </NoneSubstituteText>
+    <NoneSubstituteText Include="Microsoft.FSharp.Core.NetSdk.props" CopyToOutputDirectory="PreserveNewest" Condition="'$(FSHARPCORE_USE_PACKAGE)' == 'true'">
+      <TargetFileName>Microsoft.FSharp.Core.NetSdk.props</TargetFileName>
+      <SubDir>Shipping\</SubDir>
+      <Pattern1>{{FSCorePackageVersionValue}}</Pattern1>
+      <Replacement1>$(FSharpCoreShippedPackageVersionValue)</Replacement1>
     </NoneSubstituteText>
     <None Include="Microsoft.FSharp.Overrides.NetSdk.targets" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

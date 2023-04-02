@@ -16,6 +16,8 @@
           Microsoft.NETCore.App.Host.win-x64 [6.0.2], Microsoft.NETCore.App.Host.win-x64 [6.0.2], Microsoft.NETCore.App.Host.win-x64 [6.0.2], Microsoft.NETCore.App.Host.win-x64 [6.0.2].
     -->
     <NoWarn>$(NoWarn);NU1505</NoWarn>
+    <_PackDependentProjectsDependsOn Condition="'$(UsingToolNuGetRepack)' == 'true'">PackDependentProjectsCore;PackageReleasePackages</_PackDependentProjectsDependsOn>
+    <_PackDependentProjectsDependsOn Condition="'$(UsingToolNuGetRepack)' != 'true'">PackDependentProjectsCore;CreateReleasePackageFolder</_PackDependentProjectsDependsOn>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -23,7 +25,7 @@
     <_BuildReleasePackagesTargets>$(ArcadeSdkDir)tools\BuildReleasePackages.targets</_BuildReleasePackagesTargets>
   </PropertyGroup>
 
-  <Import Project="$(_BuildReleasePackagesTargets)" />
+  <Import Project="$(_BuildReleasePackagesTargets)" Condition="'$(UsingToolNuGetRepack)' == 'true'" />
 
   <ItemGroup>
     <NuspecProperty Include="fSharpCorePreviewPackageVersion=$(FSCorePackageVersionValue)-$(VersionSuffix)" />
@@ -64,9 +66,13 @@
     <MSBuild Projects="@(DependentProjects)" Targets="Pack" Properties="Restore=true;Pack=true;BUILD_PUBLICSIGN=$(BUILD_PUBLICSIGN)" />
   </Target>
 
+  <Target Name="CreateReleasePackageFolder">
+    <MakeDir Directories="$(ArtifactsPackagesDir)Release\Release" />
+  </Target>
+
   <Target Name="PackDependentProjects"
     BeforeTargets="Build"
-    DependsOnTargets="PackDependentProjectsCore;PackageReleasePackages">
+    DependsOnTargets="$(_PackDependentProjectsDependsOn)">
   </Target>
 
 </Project>
